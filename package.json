@@ -1,0 +1,30 @@
+{
+  "name": "go-apigateway-sqs",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "sh build.sh",
+    "deploy:local": "serverless deploy --stage local",
+    "deploy:prod": "serverless deploy --stage prod",
+    "start": "npm run build && npm run deploy:local && npm run watch",
+    "watch": "nodemon --watch src -e go --exec npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jagonzalr/go-lambda-localstack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jagonzalr/go-lambda-localstack/issues"
+  },
+  "homepage": "https://github.com/jagonzalr/go-lambda-localstack#readme",
+  "devDependencies": {
+    "concurrently": "^6.2.2",
+    "nodemon": "^2.0.13",
+    "serverless": "^2.60.0",
+    "serverless-localstack": "^0.4.35"
+  }
+}

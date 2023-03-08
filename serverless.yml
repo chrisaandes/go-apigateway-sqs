@@ -1,0 +1,78 @@
+service: my-service
+
+provider:
+  name: aws
+  runtime: go1.x
+  stage: ${opt:stage, 'dev'}
+  endpoint: ${self:custom.endpoint.${self:provider.stage}}
+  region: us-east-1
+  environment:
+    DEBUG: true
+    SLS_DEBUG: '*'
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 3000
+    lambdaPort: 3001
+  endpoint:
+    dev: http://localhost:4566
+    prod: https://api.com
+
+functions:
+  createOrder:
+    handler: bin/createOrder
+    events:
+      - http:
+          path: create-order
+          method: post
+
+  processPayment:
+    handler: bin/processPayment
+    events:
+      - http:
+          path: process-payment
+          method: post
+          
+resources:
+  Resources:
+    MyApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: MyApi
+    CreateOrderMethod:
+      Type: AWS::ApiGateway::Method
+      Properties:
+        RestApiId: 
+          Ref: MyApiGatewayRestApi
+        ResourceId:
+          Fn::GetAtt: [MyApiGatewayRestApi, RootResourceId]
+        HttpMethod: POST
+        AuthorizationType: NONE
+        Integration:
+          Type: AWS_PROXY
+          IntegrationHttpMethod: POST
+          Uri: 
+            Fn::Join: ['', ['arn:aws:apigateway:', {Ref: AWS::Region}, ':lambda:path/2015-03-31/functions/', {Fn::GetAtt: [CreateOrderLambdaFunction, Arn]}, '/invocations']]
+          PassthroughBehavior: WHEN_NO_MATCH
+          ContentHandling: CONVERT_TO_TEXT
+      DependsOn: CreateOrderLambdaFunction
+    ProcessPaymentMethod:
+      Type: AWS::ApiGateway::Method
+      Properties:
+        RestApiId: 
+          Ref: MyApiGatewayRestApi
+        ResourceId:
+          Fn::GetAtt: [MyApiGatewayRestApi, RootResourceId]
+        HttpMethod: POST
+        AuthorizationType: NONE
+        Integration:
+          Type: AWS_PROXY
+          IntegrationHttpMethod: POST
+          Uri: 
+            Fn::Join: ['', ['arn:aws:apigateway:', {Ref: AWS::Region}, ':lambda:path/2015-03-31/functions/', {Fn::GetAtt: [ProcessPaymentLambdaFunction, Arn]}, '/invocations']]
+          PassthroughBehavior: WHEN_NO_MATCH
+          ContentHandling: CONVERT_TO_TEXT
+      DependsOn: ProcessPaymentLambdaFunction

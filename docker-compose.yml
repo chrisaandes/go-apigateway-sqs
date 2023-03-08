@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack-full
+    container_name: localstack
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+      - "8080:8080"
+    environment:
+      - SERVICES=dynamodb,sqs,apigateway,lambda
+      - DEFAULT_REGION=us-east-1
+      - DATA_DIR=/tmp/localstack/data
+      - DEBUG=1
+      - LAMBDA_EXECUTOR=docker
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - EDGE_PORT=4566
+      - HOSTNAME_EXTERNAL=localstack
+      - HOSTNAME=localhost
+      - AWS_ACCESS_KEY_ID=accesskey
+      - AWS_SECRET_ACCESS_KEY=secretkey
+      - AWS_REGION=us-east-1
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
