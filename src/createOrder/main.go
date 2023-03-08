@@ -13,7 +13,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
-	"github.com/myusername/myproject/src/createOrder"
+	"github.com/chrisaandes/go-apigateway-sqs/src/createOrder"
 )
 
 type CreateOrderEvent struct {

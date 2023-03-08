@@ -1,4 +1,4 @@
-module my-project
+module github.com/chrisaandes/go-apigateway-sqs
 
 go 1.16
 

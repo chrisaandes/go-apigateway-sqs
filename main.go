@@ -7,8 +7,8 @@ import (
 
     "github.com/aws/aws-lambda-go/events"
     "github.com/aws/aws-lambda-go/lambda"
-    "your-app/src/createOrder"
-    "your-app/src/processPayment"
+    "github.com/chrisaandes/go-apigateway-sqs/src/createOrder"
+    "github.com/chrisaandes/go-apigateway-sqs/src/processPayment"
 )
 
 func main() {

@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jagonzalr/go-lambda-localstack.git"
+    "url": "git+https://github.com/chrisaandes/go-apigateway-sqs.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jagonzalr/go-lambda-localstack/issues"
+    "url": "https://github.com/chrisaandes/go-apigateway-sqs/issues"
   },
-  "homepage": "https://github.com/jagonzalr/go-lambda-localstack#readme",
+  "homepage": "https://github.com/chrisaandes/go-apigateway-sqs#readme",
   "devDependencies": {
     "concurrently": "^6.2.2",
     "nodemon": "^2.0.13",
