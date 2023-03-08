@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   localstack:
-    image: localstack/localstack-full
+    image: localstack/localstack
     container_name: localstack
     ports:
       - "4566:4566"
@@ -22,5 +22,5 @@ services:
       - AWS_SECRET_ACCESS_KEY=secretkey
       - AWS_REGION=us-east-1
     volumes:
-      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "${TMPDIR:-/tmp/localstack}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
